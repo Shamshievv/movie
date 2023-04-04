@@ -12,8 +12,11 @@ import {LanguageContext} from "../context";
     const [details,setdetails] = useState({})
     const {id} = useParams()
      const {dark} = useContext(LanguageContext)
+     const {det} = useContext(LanguageContext)
+     const {setDet} = useContext(LanguageContext)
+
     function getDetails (key){
-       axios(`https://api.themoviedb.org/3/movie/${id}?api_key=${key}&language=EN-EN`)
+       axios(`https://api.themoviedb.org/3/movie/${id}?api_key=${key}&language=${det}`)
            .then((res)=> {
                // console.log(res.data)
                setdetails(res.data)
@@ -22,7 +25,7 @@ import {LanguageContext} from "../context";
 
      useEffect(() =>{
         getDetails(API_KEY)
-    },[])
+    },[det])
     // console.log(params)
      const {genres} = details
     return (
@@ -57,6 +60,12 @@ import {LanguageContext} from "../context";
                             <h4 style={{padding : "0 20px",color:"white",fontFamily:"sans-serif"}}>Original language:{details.original_language}</h4>
                             <br/>
                             <li style={{color:"white",padding:"0 20px"}}>{Math.floor(details.runtime / 60)}h {details.runtime % 60}m</li>
+
+                            <select onChange={(e) => setDet(e.target.value)}>
+                                <option value="en-US">English</option>
+                                <option value="ru-RU">Russia</option>
+                                <option value="fr-FR">France</option>
+                            </select>
                         </div>
                     </div>
                 </div>

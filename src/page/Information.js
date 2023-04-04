@@ -11,6 +11,7 @@ const Information = () => {
     const [bio,setBio] = useState(300)
     const params = useParams()
     const {dark} = useContext(LanguageContext)
+    const {language} = useContext(LanguageContext)
     console.log(params)
     function getOpen (text){
         if (bio === 300){
@@ -21,14 +22,14 @@ const Information = () => {
         }
     }
     function getInfo(key){
-        axios(`https://api.themoviedb.org/3/person/${params.personId}?api_key=${key}&language=en-US`)
+        axios(`https://api.themoviedb.org/3/person/${params.personId}?api_key=${key}&language=${language}`)
             .then((res)=>{
                 setInfo(res.data)
             })
     }
     useEffect(()=>{
         getInfo(API_KEY)
-    },[])
+    },[language])
     console.log(info)
     return (
         <div id="info" style={{
